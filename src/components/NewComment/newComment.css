@@ -4,8 +4,66 @@
   align-items: center;
   justify-content: center;
   background-color: #e0e7ff;
-  width: 600px;
-  height: 200px;
+  width: auto;
+  height: auto;
   color: #4338ca;
   border-radius: 5px;
+  padding: 10px 50px;
+}
+.title {
+  display: flex;
+  flex-direction: column;
+}
+
+.title span {
+  font-size: 1.5em;
+}
+.formControl {
+  display: block;
+  width: 100%;
+}
+.formControl label {
+  color: #4338ca;
+  display: flex;
+}
+
+input {
+  border: none;
+  outline: none;
+  padding: 5px;
+  border-radius: 5px;
+  width: inherit;
+}
+
+input:focus {
+  border: 1px solid #4338ca;
+}
+
+textarea {
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  width: inherit;
+}
+
+button {
+  padding: 10px;
+  background-color: #4338ca;
+  color: #fff;
+  border: none;
+  width: 100%;
+  margin: 5px 0;
+  font-size: 1.1em;
+  border-radius: 10px;
+  cursor: pointer;
+  animation: changeColor 3s both linear infinite alternate;
+}
+
+@keyframes changeColor {
+  from {
+    background-color: #4338ca;
+  }
+  to {
+    background-color: #38caaa;
+  }
 }

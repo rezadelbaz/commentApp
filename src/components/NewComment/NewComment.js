@@ -2,7 +2,7 @@ import "./newComment.css";
 import { FiEdit } from "react-icons/fi";
 import { useState } from "react/cjs/react.development";
 import axios from "axios";
-const NewComment = () => {
+const NewComment = ({ postCommentHandler }) => {
   const [comment, setComment] = useState({
     name: "",
     email: "",
@@ -13,12 +13,6 @@ const NewComment = () => {
     setComment({ ...comment, [e.target.name]: e.target.value });
   };
 
-  const postCommentHandler = () => {
-    axios
-      .post("https://jsonplaceholder.typicode.com/comments", comment)
-      .then((res) => console.log(res))
-      .catch();
-  };
   return (
     <div className="newComment">
       <h2 className="title">
@@ -33,13 +27,15 @@ const NewComment = () => {
       </div>
       <div className="formControl">
         <label>email</label>
-        <input type="email" onChange={changeHAndler} name="email" />
+        <input type="email" onChange={changeHAndler} name="email" required />
       </div>
       <div className="formControl">
         <label>body</label>
-        <textarea type="textarea" onChange={changeHAndler} name="content" />
+        <textarea type="textarea" onChange={changeHAndler} name="body" />
       </div>
-      <button onClick={postCommentHandler}>add new Comment</button>
+      <button onClick={() => postCommentHandler(comment)} className="addbtn">
+        add new Comment
+      </button>
     </div>
   );
 };

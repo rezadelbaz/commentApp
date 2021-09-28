@@ -9,6 +9,7 @@
   color: #4338ca;
   border-radius: 5px;
   padding: 10px 50px;
+  width: minmax(500px, auto);
 }
 .title {
   display: flex;
@@ -46,7 +47,7 @@ textarea {
   width: inherit;
 }
 
-button {
+.addbtn {
   padding: 10px;
   background-color: #4338ca;
   color: #fff;

@@ -8,20 +8,10 @@ const Discussion = () => {
   const [comments, setComment] = useState(null);
   const [selectedId, setSelectedId] = useState(null);
   useEffect(() => {
-    // axios
-    //   .get("https://jsonplaceholder.typicode.com/comments")
-    //   .then((response) => {
-    //     setComment(response.data.slice(0, 4));
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
     const getComment = async () => {
       try {
-        const { data } = await axios.get(
-          "https://jsonplaceholder.typicode.com/comments"
-        );
-        setComment(data.slice(0, 4));
+        const { data } = await axios.get("http://localhost:3001/comments");
+        setComment(data);
       } catch (error) {
         console.log(error);
       }
@@ -32,6 +22,14 @@ const Discussion = () => {
   const selectCommentHandler = (id) => {
     setSelectedId(id);
   };
+  const postCommentHandler = (comment) => {
+    axios
+      .post("http://localhost:3001/comments", comment)
+      .then((res) => axios.get("http://localhost:3001/comments"))
+      .then((res) => setComment(res.data))
+      .catch();
+  };
+
   return (
     <main>
       <section>
@@ -49,10 +47,10 @@ const Discussion = () => {
         )}
       </section>
       <section>
-        <FullComment commentID={selectedId} comments={comments} />
+        <FullComment commentID={selectedId} setComments={setComment} />
       </section>
       <section>
-        <NewComment />
+        <NewComment postCommentHandler={postCommentHandler} />
       </section>
     </main>
   );

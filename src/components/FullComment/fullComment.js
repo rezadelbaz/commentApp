@@ -2,19 +2,26 @@ import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react/cjs/react.development";
 import "./fullComment.css";
-const FullComment = ({ commentID }) => {
+const FullComment = ({ commentID, setComments }) => {
   const [comment, setComment] = useState(null);
   useEffect(() => {
     if (commentID) {
       axios
-        .get(`https://jsonplaceholder.typicode.com/comments/${commentID}`)
+        .get(`http://localhost:3001/comments/${commentID}`)
         .then((res) => {
           setComment(res.data);
         })
         .catch();
     }
   }, [commentID]);
-
+  const deleteHandler = () => {
+    axios
+      .delete(`http://localhost:3001/comments/${commentID}`)
+      .then((res) => axios.get("http://localhost:3001/comments"))
+      .then((res) => setComments(res.data))
+      .catch((err) => console.log(err));
+    setComment(null);
+  };
   let commentDetail = <p>no comment added</p>;
   if (commentID) commentDetail = <p>loading</p>;
   if (comment) {
@@ -23,6 +30,9 @@ const FullComment = ({ commentID }) => {
         <p>{comment.name}</p>
         <p>{comment.body}</p>
         <p>{comment.email}</p>
+        <button className="btnDle" onClick={deleteHandler}>
+          Delete
+        </button>
       </div>
     );
   }

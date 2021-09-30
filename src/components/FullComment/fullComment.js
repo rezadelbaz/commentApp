@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react/cjs/react.development";
 import "./fullComment.css";
-const FullComment = ({ commentID, setComments }) => {
+const FullComment = ({ commentID, setComments, setSelectedId }) => {
   const [comment, setComment] = useState(null);
   useEffect(() => {
     if (commentID) {
@@ -14,13 +14,19 @@ const FullComment = ({ commentID, setComments }) => {
         .catch();
     }
   }, [commentID]);
-  const deleteHandler = () => {
-    axios
-      .delete(`http://localhost:3001/comments/${commentID}`)
-      .then((res) => axios.get("http://localhost:3001/comments"))
-      .then((res) => setComments(res.data))
-      .catch((err) => console.log(err));
-    setComment(null);
+  const deleteHandler = async () => {
+    try {
+      // axios
+      // .delete(`http://localhost:3001/comments/${commentID}`)
+      // .then((res) => axios.get("http://localhost:3001/comments"))
+      // .then((res) => setComments(res.data))
+      // .catch((err) => console.log(err));
+      await axios.delete(`http://localhost:3001/comments/${commentID}`);
+      const { data } = await axios.get("http://localhost:3001/comments");
+      setComments(data);
+      setSelectedId(null);
+      setComment(null);
+    } catch (error) {}
   };
   let commentDetail = <p>no comment added</p>;
   if (commentID) commentDetail = <p>loading</p>;

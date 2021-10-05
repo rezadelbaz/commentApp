@@ -1,7 +1,6 @@
 import "./newComment.css";
 import { FiEdit } from "react-icons/fi";
 import { useState } from "react/cjs/react.development";
-import axios from "axios";
 const NewComment = ({ postCommentHandler }) => {
   const [comment, setComment] = useState({
     name: "",

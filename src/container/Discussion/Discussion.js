@@ -5,7 +5,10 @@ import NewComment from "../../components/NewComment/NewComment";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./Discussion.css";
-import axios from "axios";
+// import http from "http";
+import http from "../../services/httpService";
+import { getAllComments } from "../../services/getAllCommetsService";
+import { addNewComment } from "../../services/addNewCommentService";
 const Discussion = () => {
   const [comments, setComment] = useState(null);
   const [selectedId, setSelectedId] = useState(null);
@@ -14,7 +17,7 @@ const Discussion = () => {
   useEffect(() => {
     const getComment = async () => {
       try {
-        const { data } = await axios.get("http://localhost:3001/comments");
+        const { data } = await getAllComments();
         setComment(data);
       } catch (error) {
         setError(true);
@@ -27,16 +30,17 @@ const Discussion = () => {
     setSelectedId(id);
   };
   // const postCommentHandler = (comment) => {
-  //   axios
-  //     .post("http://localhost:3001/comments", comment)
-  //     .then((res) => axios.get("http://localhost:3001/comments"))
+  //   http
+  //     .post("/comments", comment)
+  //     .then((res) => http.get("/comments"))
   //     .then((res) => setComment(res.data))
   //     .catch();
   // }
   const postCommentHandler = async (comment) => {
     try {
-      await axios.post("http://localhost:3001/comments", comment);
-      const { data } = await axios.get("http://localhost:3001/comments");
+      await addNewComment(comment);
+      // await http.post("/comments", comment);
+      const { data } = await getAllComments();
       setComment(data);
     } catch (error) {}
   };
